@@ -7,8 +7,12 @@ local EOF = -1
 
 local symbols = { ['+'] = true, ['-'] = true,
                     ['*'] = true, ['/'] = true,
-                    ['%'] = true, ['^'] = true
+                    ['%'] = true, ['^'] = true,
+                    ['('] = true, [')'] = true
     	        }
+
+local keywords = { ['and'] = true, ['or'] = true,
+                    ['true'] = true, ['false'] = true }
 
 -- Lexer class
 local Lexer = {}
@@ -103,6 +107,13 @@ function Lexer.new(chunk)
         )
     end
 
+    local function is_ident(b)
+        b = b or self.byte
+        return b and (is_digit(b) or
+                (b >= ASCII_A and b <= ASCII_Z) or
+                (b >= ASCII_a and b <= ASCII_z))
+    end
+
     local function lex_number()
         repeat
             save_next()
@@ -113,13 +124,27 @@ function Lexer.new(chunk)
     local function lex()
         reset_buffer()
         while true do
-            -- lex numbers
-            if is_digit() then
-                lex_number()
-                self.token = 'TK_number'
-                self.token_value = tonumber(self.buffer)
-                return self.token, self.token_value
-            
+            if is_ident() then
+                -- lex numbers
+                if is_digit() then
+                    lex_number()
+                    self.token = 'TK_number'
+                    self.token_value = tonumber(self.buffer)
+                    return self.token, self.token_value
+                else -- lex names
+                    repeat
+                        save_next()
+                    until not is_ident()
+                    local kw = keywords[self.buffer]
+                    if kw then
+                        self.token = 'TK_' .. self.buffer
+                        self.token_value = self.buffer
+                    else
+                        self.token = 'TK_name'
+                        self.token_value = self.buffer
+                    end
+                    return self.token
+                end
             elseif is_eol() then
                 lex_newline()
 
@@ -130,6 +155,51 @@ function Lexer.new(chunk)
 
             elseif is_eof() then
                 self.token = 'TK_eof'
+                return self.token
+            elseif self.c == '>' then
+                if self.p == '=' then
+                    lex_next()
+                    self.token = 'TK_ge'
+                else
+                    self.token = '>'
+                end
+                lex_next()
+                return self.token
+            elseif self.c == '<' then
+                if self.p == '=' then
+                    lex_next()
+                    self.token = 'TK_le'
+                else
+                    self.token = '<'
+                end
+                lex_next()
+                return self.token
+            elseif self.c == '!' then
+                if self.p == '=' then
+                    lex_next()
+                    self.token = 'TK_ne'
+                else
+                    self.token = '!'
+                end
+                lex_next()
+                return self.token
+            elseif self.c == '.' then
+                if self.p == '.' then
+                    lex_next()
+                    self.token = 'TK_concat'
+                else
+                    self.token = '.'
+                end
+                lex_next()
+                return self.token
+            elseif self.c == '=' then
+                if self.p == '=' then
+                    lex_next()
+                    self.token = 'TK_eq'
+                else
+                    self.token = '='
+                end
+                lex_next()
                 return self.token
             else -- every single char token should be treated here
                 if symbols[self.c] then

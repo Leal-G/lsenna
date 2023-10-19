@@ -23,28 +23,28 @@ Compiler
     Parser -> AST
         parse simple expressions
             numbers
-            (+-/*)
+            (+-/*%^)
+            brackets
+            unary expressions
+            comparison expressions
+            boolean expressions (and/or)
+        parse strings and comments
     Codegen
         generate lua code
     Evaluator
         naive evaluator
 
+GREAT!!!
 
-Today we did a lot!!
-    we parsed operators
-    parsed simple arith operations
-    transpiled it to lua
-    and rAN it
+so...  I think we've covered a lot for today!!
 
-    this is really great!!
+little by little Senna is turning into shape.
 
-that's it for today!!
+Hope will like it!!
 
-if you liked the video, please hit like AND subscribe!
+feel free to fork the github repo (link in description)
 
-for the next video, lets start looking at strings and comments
-
-see you!!
+see you soon!!!
 
 thank you!!
 
