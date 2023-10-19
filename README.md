@@ -1,4 +1,4 @@
-# Senna: The Tribute-Oriented Lua/Luajit Targeted Programming Language
+# Senna: Tribute-Oriented Programming Language
 
 Senna is a cutting-edge programming language named in honor of the legendary Formula 1 driver, Ayrton Senna. Just like Senna's racing prowess, this language is designed to provide exceptional speed, precision, and efficiency in software development. It is tailored to seamlessly run on the renowned Lua/Luajit virtual machines, emphasizing high-performance computing and rapid application deployment.
 
