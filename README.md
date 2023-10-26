@@ -2,7 +2,6 @@
 
 Senna is a cutting-edge programming language named in honor of the legendary Formula 1 driver, Ayrton Senna. Just like Senna's racing prowess, this language is designed to provide exceptional speed, precision, and efficiency in software development. It is tailored to seamlessly run on the renowned Lua/Luajit virtual machines, emphasizing high-performance computing and rapid application deployment.
 
-## Speed and Efficiency
 ** ¡¡¡ATENTION!!! ** => This is an ongoing project. Feel free to contribute and follow development through youtube channel: https://www.youtube.com/watch?v=g1W3Xgegz7k&list=PLWoooOHC2V0_JSKFkn9OvGFqRck-ujdhS&pp=gAQBiAQB
 
 ## Speed and Efficiency
